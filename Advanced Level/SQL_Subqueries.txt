@@ -1,0 +1,65 @@
+---------------
+Subqueries
+---------------
+
+There are 2 types of Subqueries in terms of dependency
+
+1. Non-Correlated Subquery
+2. Correlated Subquery
+
+1. Non- Correlated Subquery 
+A subquery that can run independently from the main query
+
+2. Correlated Subquery 
+A subquery that relies on values from the main query
+
+There are 3 types of subqueries in terms of Result types
+1. Scalar Subquery - When we get only one value. It will return only one value
+2. Row Subquery - It will return multiple rows and single column
+3. Table Subquery - It will return multiple rows and multiple columns
+
+How to use Subqueries in different location - 
+Subquery in FROM clause 
+Used as temporary table for the main query
+
+Subquery in SELECT Clause
+
+Used to aggregate data side by side with the main query's data, allowing for direct comparison.
+
+Select column1, (select column from table1 where condition) as alias from table1 - 
+Here only scalar subqueries are allowed to be used 
+
+Subquery in Join Clause
+Used to prepare the data (filtering or aggregation) before joining it with other tables.
+
+Subquery in where Clause
+Used for complex filtering logic and makes query more flexible and dynamic. 
+We have comparison operators(<,>,!=,=,<=,>=) and logical operators(in, not in, any, all, exists)
+
+Comparison Operators
+Used to filter data by comparing two values
+
+Syntax
+
+select column1, column2 from table1 where column = (select column from table2 where condition)
+Rule - Only scalar subquery are allowed to be used
+
+Subquery IN Operator
+Checks whether a value matches any value from a list
+
+select column1, column2 from table1 where column IN (select column from table2 where condition)
+
+Any Operator
+Checks if a value matches any value within a list
+Used to check if a value is true for at least one of the values in a list
+Syntax
+select column1, column2 from table1 where column  < all/any (select column from table1 where condition)
+
+ALL Operator 
+Checks if a value matches all value within a list
+
+EXISTS Operator
+Checks if a subquery returns any rows
+
+select column1, column2 from table2 where EXISTS (select 1 from table1 where table1.id = table2.id)
+

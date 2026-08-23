@@ -1,0 +1,38 @@
+---------------------
+SET OPERATORS
+---------------------
+Rules of SET Operator
+
+- SET operators can be used almost in all clauses. where, join, group by, having
+- ORDER By is allowed only once at the end of query
+- Number of columns in each query must be same
+- Data type of columns in each query must be compatible
+- The order of column in each query must be same 
+- The column names in the result set are determined by the column names specified in the first query.
+- The above means that first query control column names 
+- Even if all rules are met and SQL shows no errors, the result may be incorrect.
+- Incorrect column selection leads to inaccurate results
+- The order of queries in a UNION operation does not affect the results
+
+SET Operator - UNION
+
+- Returns all distinct rows from both queries.
+- Removes duplicates rows from the result
+
+SET Operator - UNION ALL
+
+- Returns all rows from both queries, including duplicates
+
+UNION ALL vs UNION
+
+- UNION ALL is generally faster than UNION
+- Use UNION ALL to find duplicates and quality issues
+
+SET Operator - EXCEPT (MINUS)
+
+- Returns all distinct rows from the first query that are not found in the second query
+- It is the only one where the order of queries affect the final result
+
+INTERSECT
+
+

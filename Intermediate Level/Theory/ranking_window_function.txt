@@ -1,0 +1,84 @@
+--------------------------
+Ranking Window Function
+--------------------------
+
+First it will sort the data and then assign rank.
+
+We have integer based ranking and percentage based ranking
+Integer based ranking is called top/bottom N Analysis. Example - row_number, rank, dense_rank, ntile
+Percentage based ranking is called Distribution Analysis. Example - Cume_dist, percent_rank
+
+SYNTAX
+
+Rank() over (partition by product ID order by sales) - Expression must be empty. Partition by is optional.
+Order by is required. Frame is not allowed
+
+DENSE_Rank() over (partition by product ID order by sales) - Expression must be empty. Partition by is optional.
+Order by is required. Frame is not allowed
+
+ROW_NUMBER() over (partition by product ID order by sales) - Expression must be empty. Partition by is optional.
+Order by is required. Frame is not allowed
+
+CUME_DIST() over (partition by product ID order by sales) - Expression must be empty. Partition by is optional.
+Order by is required. Frame is not allowed
+
+NTILE() over (partition by product ID order by sales) - Expression can be numeric. Partition by is optional.
+Order by is required. Frame is not allowed
+
+ROW_NUMBER()
+
+- Assign a unique number to each row
+- It doesn't handle ties
+
+Use Cases
+Top-N Analysis (Analysis the top performers to do targeted marketing)
+Bottom-N Analysis
+Help analysis the underperformance to manage risks and to do optimizations
+Assign Unique IDs
+Help to assign unique identifier for each row to help paginating
+Paginating - The process of breaking down large data into smaller, more manageable chunks
+Identify Duplicates - Identify and remove duplicates rows to improve data quality
+
+Columns used in group by and window functions must be the same
+
+
+RANK()
+
+- Assign a rank to each row
+- It handle ties
+- It leaves gap in the ranking
+
+DENSE_RANK()
+
+- Assign a rank to each row
+- It handle ties
+- It doesn't leave any gaps in ranking
+
+Integer Based Ranking Comparison
+
+NTILE()
+Divide the rows into a specified number of approximately equal groups(Buckets)
+Bucket size = Number of Rows/Number of Buckets
+
+Use Case
+1. Data Segmentation
+2. Equalizing Load (Load Balancing)
+
+Percentage Based Ranking
+1. cume_dist
+2. percent_rank
+
+cume_dist
+
+cume_dist() over (order by sales desc)
+cume_dist = Position Number / Number of rows
+
+Tie Rule - The position of the last occurrence of the same value
+
+Percent Rank
+Calculates the relative position of each row
+
+percent_rank() over (order by sales desc)
+percent_rank = Position Number - 1 / Number of rows - 1
+
+Tie Rule - The position of the first occurrence of the same value

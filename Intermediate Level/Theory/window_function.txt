@@ -1,0 +1,92 @@
+-------------------
+Window Functions 
+-------------------
+
+- Perform Calculations (e.g aggregations) on a specific subset of data,
+  without losing the level of details of rows
+
+Group By Functions - Aggregate (sum, count, avg, min, max)
+
+Window Functions  
+- Aggregate (sum, count, avg, min, max)
+- rank Functions (row_number, rank, dense_rank, cume_dist, percent_rank, ntile(n)) 
+- Value/analytics function (lead(exp,offset,default), lag(exp,offset,default), first_value(exp), first_value(exp))
+
+Group By Limits - Can't do aggregations and provide details at the same time
+
+-- Result Granularity - Window functions returns a result for each row
+-- Select OrderId, OrderDate, ProductId, SUM(sales) over(partition by ProductId) as TotalSalesbyProduct from sales.orders
+
+Window Functions - Syntax
+window function over(partition clause, order clause, frame clause)
+Example - avg(sales) over(partition by category order by orderDate rows unbounding preceding)
+Here where sales is placed it is called Function expression. We can use multiple different expression like 
+EMPTY - rank() over (order by orderDate) - With rank it should always be empty
+COLUMNS - With Aggregate we can use columns - avg(sales) over (order by orderDate)    
+NUMBER - here we are allowed only to use number - Ntile(2) over (order by orderDate) 
+Multiple arguments - lead(sales, 2,10) over (order by orderDate)
+Conditional Logic - SUM(case when sales > 100 then 1 else 0 end) over (order by orderDate)
+
+- Aggregate Window Function
+count - All Datatype
+sum, avg, min, max - Numeric
+
+- Rank Window Functions 
+(row_number, rank, dense_rank, cume_dist, percent_rank) - Always Empty
+ntile(n) - Numeric
+
+- Value/analytics Functions
+(lead(exp,offset,default), lag(exp,offset,default), first_value(exp), first_value(exp)) - All Datatype
+
+-- OVER clause
+Tells SQL that the function used is a window function. It defines a window or subset of data
+
+Windows Function - Partition By
+Divides the entire dataset into partions(windows or groups)
+Options we have with Partition By - First empty, we can leave over empty like sum(sales) over()
+partition by single column - sum(sales) over(partition by product)
+partition by combined  column - sum(sales) over(partition by product, OrderStatus)
+In all window functions, partition by is optional
+ 
+-- Flexibility of Window
+Allows aggregation of data at different granularities within the same query
+
+Windows Function - ORDER BY
+In aggregate - Order clause is optional
+In rank and value function - order caluse is required
+rank() over (partition by month order by sales desc)
+
+Windows Function - FRAME clause
+
+-- Frame clause can only be used together with order by clause.
+rows between current row and unbounded following
+
+rows is frame type (rows or range)
+current row (Frame Boundary(Lower Value) - Current row, n preceding or unbounded preceding)
+Unbounded Following (Frame Boundary(Higher Value) - Current row, n following or unbounded following)
+order by always uses a frame even if you don't mention it - Rows between unbounded preceding and current row
+
+Window Functions - 4x Rules
+First Rule
+Window Functions can be used ONLY in SELECT and ORDER BY Clauses
+Window Functions can't be used to filter Data. WE cannot inlude window function in where clause
+
+Second Rule
+Nesting Window Functions is not allowed
+We cannot use window function another window function
+
+Third Rule
+SQL execute WINDOW functions after WHERE Clause
+
+Fourth Rule
+Window Function can be used together with GROUP BY in the same query, ONLY if the same columns are used
+
+Summary
+Performs calculations on subset of data without losing details.
+Window vs GroupBy
+Window is more powerful & dynamic than group by
+For advanced Data Analysis, use window function and for simple data analysis, use simple group by
+Use group by + window in same query only if same column used 
+
+
+

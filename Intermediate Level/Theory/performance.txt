@@ -1,0 +1,48 @@
+-----------------------
+SQL Performance Tips
+-----------------------
+
+Always check the execution plan to confirm performance improvements when optimizing your query
+
+If there's no improvement then just focus on readability
+
+1. Select only required columns and not select *
+2. Avoid unnecessary distinct and order by. Distinct and order by are expensive and they require a lot of resources.
+3. For exploration purposes, Avoid scanning all data, instead give top 10 rows or limit 10.
+4. Filtering Data - Create non-clustered index on frequently used columns in where clause. 
+5. Avoild applying
+functions to columns in WHERE clause. Example select * from sales where lower(order_status) = 'Delivered'
+Functions on columns can block index usage
+6. Avoid using leading wildcards as they prevent index usage
+7. Use IN instead of multiple OR operators
+8. Joining Data - Understand the speed of Joins and Use Inner Joins when possible
+Best Performance - INNER Join
+Slightly slow performance - LEFT AND RIGHT
+WORST PERFORMER - Outer Join
+9. Use Explicit Join (ANSI Join) instead of Implicit Join (non-ANSI Join)
+10. Ensure that the columns used in the ON clause are indexed  
+11. Filter Before Joining (Big Tables)
+Try to isolate the preparation step in CTE or subquery
+12. Aggregate before joining (Big Tables) - Always try to avoid using Correlated subqueries as they have the WORST
+performance. Correlated queries are inefficient because SQL execute aggregations for every row.
+13. Use union instead of or in joins
+14. Check for Nested Loops and use SQL Hints when necessary. Example OPTION(Hash Join) or any other suitable joins
+15. Use Union all instead of Union when duplicates are acceptable
+16. Use Union all + Distinct instead of using UNION | When duplicates are not acceptable
+17. Aggregation - Use columnstore indexes for aggregations on large table
+18. Pre-aggregate data and store it in new table for reporting
+19. Subqueries - JOIN vs EXISTS vs IN
+The IN operator processes and evaluates all rows. It lacks an early exit mechanism
+JOIN (Best Practice : If performance is equal to EXISTS)
+EXISTS (EXISTS better than join because it stops at first match and avoid data duplication)
+20. Avoid Redundant logic in your query
+21. Creating Table - Avoid Data Types Varchar and text
+22. Avoid (MAX) unnecessarily large lengthsin data types. Example varchar(max) - Avoid This
+23. Use the Not Null constraint where applicable
+24. Ensure all your tables have a clustered primary key 
+25. Create a non-clustered index for foreign keys that are used frequently
+26. Indexing - Avoid Over Indexing
+27. Drop unused indexes
+28. Update statistics (Weekly)
+29. Reorgnaize and rebuilt indexes (Weekly)
+30. Partition large tables (Facts) to improve performance. Next apply a columnstore index for the best result 

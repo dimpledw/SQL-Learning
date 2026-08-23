@@ -1,0 +1,86 @@
+-------------------------------------
+CTE (Common Table Expression)
+-------------------------------------
+
+Temporary, named result set (virtual table), that can be used multiple times within your query to simplify 
+and organize complex query
+
+Why CTE? When to use?
+
+Readability
+Modularity
+Reusability
+
+----------
+CTE Types
+----------
+
+Non-Recursive CTE - Standalone CTE and Nested CTE
+Recursive CTE
+
+Standalone CTE
+Defined and Used independentlly.
+Runs independently as it's self contained and doesn't rely on other CTEs or queries.
+Syntax
+with cte-name as 
+(select .. from where)
+select .. from cte-name where
+
+RULE - You cannot use ORDERBY directly within CTE
+
+Multiple Standalone CTEs
+with cte1 as 
+(select ...
+from ...
+where ...),
+cte2 as 
+(
+    select ...
+    from ...
+    where ...
+)
+select from cte1 join cte2 where
+
+Nested CTE
+CTE inside another CTE
+
+A nested CTE uses the result of another CTE, so it can't run independently.
+
+Syntax
+
+with cte1 as 
+(
+    select ..
+    from ..
+    where ..
+),
+cte2 as 
+(
+    select ...
+    from cte1
+    where
+)
+select ...
+from cte2 (It can be cte1 as well)
+where
+
+Best Practice
+Rethink and refactor your CTEs before starting a new one
+Don't use more than 5 CTEs n one query; otherwise, your code will be hard to understand and maintain
+
+Recursive CTE - Self referencing query that repeatedly processes data until a specific condition is met.
+Syntax
+
+with cte1 as
+(
+    select ...
+    from ...
+    where ...
+    union all/union
+select ... 
+from cte1
+where ...
+)
+select from cte1
+
+Non Recusrive CTE - is executed only once without any repetition 

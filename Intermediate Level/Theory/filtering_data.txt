@@ -1,0 +1,14 @@
+------------------------
+Filtering Data
+------------------------
+
+Comparison operators
+
+Compare two things
+Expression operator expression
+
+column1 = column2 example first_name = last_name
+column1 = value example first_name = "Alexa"
+function = value example upper(first_name) = 'ALEXA'
+Expression = value example price * quantity = 100
+Subquery = value example (select avg(sales) from orders) = 1000
