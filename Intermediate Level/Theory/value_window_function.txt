@@ -1,0 +1,59 @@
+-----------------------
+WINDOW VALUE FUNCTION
+-----------------------
+
+Access a value from another row
+LAG - Compare sales Current Month vs Previous Month
+LEAD - Compare sales Current Month vs Next Month
+FIRST_VALUE - Compare sales Current Month vs First Month
+LAST_VALUE - Compare sales Current Month vs last Month
+
+Lead(expr, offset, default) - 
+All data type can be used. Partition by is optional and order by is required. Frame is not allowed
+Lag(expr, offset, default) - 
+All data type can be used. Partition by is optional and order by is required. Frame is not allowed
+first_value(expr) - 
+All data type can be used. Partition by is optional and order by is required. Frame is optional
+last_value(expr) - 
+All data type can be used. Partition by is optional and order by is required. Frame should be used
+
+NOTE - 
+Offset is Number of rows forward or backward from current row
+Default Value - Returns default value if next/previous row is not available. Default is Null
+
+Value Window Function (Lead/Lag)
+
+LEAD(expr, offset, default) - 
+Here expr is required, 
+offset is optional. 
+Default is optional. We can define default value or else it will return NULL
+Lead(Sales, 2, 10) over (partition by product_id order by order_date)
+
+LAG(expr, offset, default) - 
+Here expr is required, 
+offset is optional. 
+Default is optional. We can define default value or else it will return NULL
+LAG(Sales, 2, 10) over (partition by product_id order by order_date)
+
+Use Case
+Analyze the month over month(MoM) performance by finding the percentage change in sales between current and previous months
+Time Series Analysis - The process of analyzing the data to understand pattern, trends, and behaviors over time
+
+Year over Year YoY
+Analyze the overall growth or decline of the business performance over time
+
+Month over Month MoM
+Analyze short-term trends and discover patterns in seasonality
+
+Customer Retention Analysis
+Measure customer's behavior and loyalty to help businesses build strong relationships with customers
+
+First_Value()
+Access a value from the first row within a window
+
+Last_Value()
+Access a value from the last row within a window
+In last_value, don't use default frame because it will return the same result and of no use.
+
+Default Frame - Range between unbounded preceding and current row.
+
